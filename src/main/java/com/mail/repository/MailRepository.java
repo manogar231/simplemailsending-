@@ -1,4 +1,4 @@
-package com.mail.MailRepository;
+package com.mail.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

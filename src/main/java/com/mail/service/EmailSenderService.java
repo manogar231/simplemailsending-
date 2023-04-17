@@ -5,8 +5,8 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import com.mail.MailRepository.MailRepository;
 import com.mail.model.User;
+import com.mail.repository.MailRepository;
 
 @Service
 public class EmailSenderService {
