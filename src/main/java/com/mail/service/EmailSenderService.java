@@ -1,47 +1,29 @@
 package com.mail.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import com.mail.model.User;
-import com.mail.repository.MailRepository;
+import com.mail.model.UserDto;
 
 @Service
 public class EmailSenderService {
 
 	@Autowired
-	private JavaMailSender mailSender; 
+	private JavaMailSender mailSender;
+	@Value(value = "${spring.mail.username}")
+    private	String fromMail;
 	
-	@Autowired
-	private MailRepository mailRepository;
-	
-	//FOR SAVE THE DETAILS IN DATABASE
-	public Object saveMailinfo(User user) {
-		
-		User users=new User();
-    	users.setFromMail(user.getFromMail());
-    	users.setTomail(user.getTomail());
-    	users.setBody(user.getBody());
-    	users.setSubject(user.getSubject());
-    	sendmail(users);
-    	
-    	return mailRepository.save(users);
-    	 
-	}	
-       //SENDING THE MAIL	
-	public Object sendmail(User user) {
-		
-	SimpleMailMessage message=new SimpleMailMessage();
-		message.setFrom(user.getFromMail());
-		message.setTo(user.getTomail());
-		message.setText(user.getBody());
-		message.setSubject(user.getSubject());
+	// SENDING THE MAIL
+	public Object sendmail(UserDto user) {
+		SimpleMailMessage message = new SimpleMailMessage();
+		message.setFrom(fromMail);
+		message.setTo(user.getmail());
+		message.setText(user.getResetOtp());
+		message.setSubject("OTP For Reset Password");
 		mailSender.send(message);
-		
 		return "Mail Sending Successfully";
-		
 	}
 }
-	
